@@ -16,9 +16,12 @@
     (catch Exception e
       (str "Error reading file: " (.getMessage e)))))
 
-;; Change to adhere to llm preferred context
-(defn file-content [file]
-  (str "File: " (.getPath file) "\n"
-       "Content:\n"
-       (read-file-content file)
-       "\n\n"))
+(defn file-content
+  "Generate the content for a file in the desired format"
+  [file index]
+  (let [source (.getName file)
+        content (read-file-content file)]
+    (format "<document index=\"%d\">\n<source>%s</source>\n<document_content>%s</document_content>\n</document>"
+            index
+            source
+            content)))
