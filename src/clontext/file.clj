@@ -1,6 +1,5 @@
 (ns clontext.file
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str]))
+  (:require [clojure.java.io :as io]))
 
 (defn list-files
   "Recursively list all files in the given directory"
