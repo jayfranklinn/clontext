@@ -6,23 +6,7 @@
             [clontext.gitignore :as gitignore]))
 
 (defn generate-context
-  "Generate context from the given project directory and save it to the output file.
-   
-   This function performs the following steps:
-   1. Read .gitignore patterns from the project directory
-   2. List all files in the project directory
-   3. Filter out files that should be ignored based on .gitignore patterns
-   4. Generate XML-like content for each file
-   5. Combine all file contents into a single context string
-   6. Write the context string to the output file
-
-   Parameters:
-   - project-dir: String path to the Clojure project directory
-   - output-file: String path where the context file should be saved
-
-   Throws:
-   - java.io.FileNotFoundException if the project directory doesn't exist
-   - java.io.IOException for other I/O related errors"
+  "Generate context from the given project directory and save it to the output file."
   [project-dir output-file]
   (let [project-dir-file (io/file project-dir)]
     (when-not (.exists project-dir-file)
@@ -38,7 +22,7 @@
                          (map-indexed
                            (fn [idx file]
                              (try
-                               (file/file-content file (inc idx))
+                               (file/file-content project-dir file (inc idx))
                                (catch Exception e
                                  (println (str "Warning: Error processing file " (.getName file) ": " (.getMessage e)))
                                  "")))  ; Skip files that can't be processed
